@@ -143,8 +143,12 @@ class TransformerModel(nn.Transformer):
         output = self.encoder(src, mask=self.src_mask)
         output = self.decoder(output)
         return F.log_softmax(output, dim=-1)
+
+'''
+Modify model.py to add code for the hybrid model
+'''
 class MemTransformerModule(nn.Module):
-    r"""MemTransformerModule is a stack of N decoder layers"""
+    #MemTransformerModule is a stack of N decoder layers
     __constants__ = ['norm']
 
     def __init__(self, decoder_layer, num_layers, norm=None):
@@ -173,7 +177,7 @@ class MemTransformerModule(nn.Module):
         return output, mems2
 
 class MemTransformerLayer(nn.Module):
-    r"""MemTransformerLayer is made up of self-attn, multi-head-attn and feedforward network."""
+    #MemTransformerLayer is made up of self-attn, multi-head-attn and feedforward network.
 
     def __init__(self, d_model, nhead, dim_feedforward=2048, dropout=0.1, activation="relu"):
         super(MemTransformerLayer, self).__init__()
@@ -209,7 +213,7 @@ class MemTransformerLayer(nn.Module):
         return tgt, memory
 
 class LSTMTransformerModel(nn.Module):
-    """Container module with an encoder, a LSTM module, a transformer module, and a decoder."""
+    #Container module with an encoder, a LSTM module, a transformer module, and a decoder."""
 
     def __init__(self, ntoken, ninp, nhead, nhid, nlayers, dropout=0.5):
         super(LSTMTransformerModel, self).__init__()
@@ -275,35 +279,3 @@ def _get_activation_fn(activation):
         return F.gelu
 
     raise RuntimeError("activation should be relu/gelu, not {}".format(activation))
-
-'''
-if __name__ == "__main__":
-    # sample code
-    ntoken = 100
-    ninp = 10
-    nhead = 2
-    nhid = 10
-    nlayers = 2
-    seq_len = 5
-    batch_size = 4
-
-    model = LSTMTransformerModel(ntoken, ninp, nhead, nhid, nlayers)
-
-    data = torch.randint(0, ntoken, (seq_len, batch_size))
-    hidden = model.init_hidden(batch_size)
-    mems = None
-
-    logit, hidden, mems = model(data, hidden=hidden, mems=mems)
-
-    print('logit:')
-    print(logit)
-    print(logit.size())
-    print()
-    print('hidden:')
-    print(hidden)
-    print(hidden[0].size(), hidden[1].size())
-    print()
-    print('mems:')
-    print(mems)
-    print([mem.size() for mem in mems])
-    '''
