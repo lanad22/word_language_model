@@ -1,4 +1,4 @@
-(.venv) (base) MacBook-Air-4:word_language_model Lanado$ python main.py --model=LSTM
+(.venv) (base) MacBook-Air-4:word_language_model Lanado$ python main.py --save=lstm.pt
 | epoch   1 |   200/ 2983 batches | lr 20.00 | ms/batch 148.88 | loss  7.63 | ppl  2060.19
 | epoch   1 |   400/ 2983 batches | lr 20.00 | ms/batch 145.84 | loss  6.85 | ppl   944.56
 | epoch   1 |   600/ 2983 batches | lr 20.00 | ms/batch 148.42 | loss  6.49 | ppl   655.96
